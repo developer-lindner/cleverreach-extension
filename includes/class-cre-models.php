@@ -93,6 +93,11 @@ class Cre_Models {
 		// Include custom `list_id`.
 		if ( ! empty( $atts['list_id'] ) ) {
 			$html = str_replace( '<form ', '<form data-list="' . $atts[ 'list_id' ] . '" ', $html );
+            
+            //check plugin setting instead of class_exists again and again?!
+            if ( class_exists( 'WPCF7' ) ) {
+                $html .= '<input type="hidden" name="list" value="'.$atts['list_id'].'">';
+            }
 		}
 
 		// Include custom `source`.

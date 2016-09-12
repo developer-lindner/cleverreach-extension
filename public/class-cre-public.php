@@ -165,7 +165,13 @@ class Cre_Public {
 						)
 					);
 				}
-
+                
+                //check plugin setting instead of class_exists again and again?!
+                if ( class_exists( 'WPCF7' ) ) {
+                    if( 'list' == $key){
+                        $list_id = (int)$value;
+                    }
+                }
 			}
 
 			// Populate `$source` (string)
@@ -184,8 +190,11 @@ class Cre_Public {
 				'source'     => esc_html( trim( $source ) ),
 				'attributes' => $post_attr
 			);
-
-			$list_id = ( empty( $_POST[ 'list' ] ) ? $helper->get_option( 'list_id' ) : (int) $_POST[ 'list' ] );
+            
+            
+            if(empty($list_id)){
+                $list_id = ( empty( $_POST[ 'list' ] ) ? $helper->get_option( 'list_id' ) : (int) $_POST[ 'list' ] );
+            }
 			$receiver_added = $receiver->add( $user, $list_id );
 
 			// Test returned data.
